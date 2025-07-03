@@ -347,8 +347,17 @@ return [
     'icon' => 'fas fa-headset',
 ],
 
+[
+    'text' => 'Collections',
+    'url'  => 'admin/collections',
+    'icon' => 'fas fa-layer-group',
+],
+[
+    'text' => 'Categories',
+    'url'  => 'admin/categories',
+    'icon' => 'fas fa-list-alt',
+],
 
-    
     ],
 
     /*

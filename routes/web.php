@@ -9,7 +9,8 @@ use App\Http\Controllers\CataloguePageController;
 use App\Http\Controllers\AboutUsPageController;
 use App\Http\Controllers\CareerPageController;
 use App\Http\Controllers\CustomerCarePageController;
-
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\VariantController;
 
 // Dashboard (only accessible to logged-in users)
 Route::get('/', function () {
@@ -49,6 +50,64 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     Route::get('customer-care', [CustomerCarePageController::class, 'edit'])->name('customer-care.edit');
     Route::post('customer-care', [CustomerCarePageController::class, 'update'])->name('customer-care.update');
+
+    // All Products Start
+
+    // Collection
+    Route::resource('collections', \App\Http\Controllers\CollectionController::class);
+    // Categories
+    Route::resource('categories', \App\Http\Controllers\CategoryController::class);
+    // Ranges
+    // Route::resource('ranges', \App\Http\Controllers\RangeController::class);
+    // Route::post('ranges/reorder', [\App\Http\Controllers\RangeController::class, 'reorder'])->name('ranges.reorder');
+
+
+     // View all ranges under a category
+    Route::get('categories/{category}/ranges', [\App\Http\Controllers\CategoryRangeController::class, 'index'])
+        ->name('categories.ranges.index');
+
+    // Create form
+    Route::get('categories/{category}/ranges/create', [\App\Http\Controllers\CategoryRangeController::class, 'create'])
+        ->name('categories.ranges.create');
+
+    // Store new range
+    Route::post('categories/{category}/ranges/store', [\App\Http\Controllers\CategoryRangeController::class, 'store'])
+        ->name('categories.ranges.store');
+
+    // Edit form
+    Route::get('categories/{category}/ranges/{range}/edit', [\App\Http\Controllers\CategoryRangeController::class, 'edit'])
+        ->name('categories.ranges.edit');
+
+    // Update range
+    Route::put('categories/{category}/ranges/{range}', [\App\Http\Controllers\CategoryRangeController::class, 'update'])
+        ->name('categories.ranges.update');
+
+    // Delete range
+    Route::delete('categories/{category}/ranges/{range}', [\App\Http\Controllers\CategoryRangeController::class, 'destroy'])
+        ->name('categories.ranges.destroy');
+
+    // Reorder ranges via drag-drop
+    Route::post('categories/{category}/ranges/reorder', [\App\Http\Controllers\CategoryRangeController::class, 'reorder'])
+        ->name('categories.ranges.reorder');
+
+    // Product CRUD
+
+    // Product Routes under a Range
+    Route::prefix('ranges/{range}/products')->name('ranges.products.')->group(function () {
+        Route::get('/', [ProductController::class, 'index'])->name('index');
+        Route::get('create', [ProductController::class, 'create'])->name('create');
+        Route::post('/', [ProductController::class, 'store'])->name('store');
+        Route::get('{product}/edit', [ProductController::class, 'edit'])->name('edit');
+        Route::put('{product}', [ProductController::class, 'update'])->name('update');
+        Route::delete('{product}', [ProductController::class, 'destroy'])->name('destroy');
+        Route::post('reorder', [ProductController::class, 'reorder'])->name('reorder');
+    });
+
+
+    // variant products
+    Route::resource('products.variants', VariantController::class);
+
 });
+
 
 

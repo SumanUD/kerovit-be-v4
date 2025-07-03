@@ -6,6 +6,15 @@
     <h1 class="text-primary">Home Page CMS</h1>
 @stop
 
+<style>
+    .cke_notifications_area {
+        display: none;
+    }
+    .img-thumbnail {
+        height: revert-layer !important;
+    }
+</style>
+
 @section('content')
 <div class="container-fluid">
 
