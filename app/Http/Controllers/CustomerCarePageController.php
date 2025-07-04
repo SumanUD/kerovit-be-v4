@@ -27,7 +27,7 @@ class CustomerCarePageController extends Controller
             'info_email' => 'required|email',
             'call_number' => 'required|string|max:20',
             'tollfree_number' => 'required|string|max:20',
-            'whatsapp_chat' => 'required|url',
+            'whatsapp_chat' => 'required|string',
         ]);
 
         $care = CustomerCarePage::first();
@@ -66,8 +66,8 @@ class CustomerCarePageController extends Controller
                 ],
                 'customer_care' => [
                     'call' => $data->call_number,
-                    'toll_free' => $data->toll_free_number,
-                    'whatsapp' => $data->whatsapp_link,
+                    'toll_free' => $data->tollfree_number,
+                    'whatsapp' => $data->whatsapp_chat,
                 ]
             ]
         ]);

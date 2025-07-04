@@ -298,67 +298,70 @@ return [
     |
     */
 
-    'menu' => [
-        // Navbar items:
-        [
-            'type' => 'navbar-search',
-            'text' => 'search',
-            'topnav_right' => true,
-        ],
-        [
-            'type' => 'fullscreen-widget',
-            'topnav_right' => true,
-        ],
-
-        // Sidebar items:
-        [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
-        ],
-
-        [
-            'text' => 'Homepage',
-            'url' => 'admin/homepage',
-            'icon' => 'far fa-fw fa-file',
-            'label_color' => 'success',
-        ],
-
-        [
-            'text' => 'Catalogue',
-            'url' => 'admin/catalogue',
-            'icon' => 'far fa-fw fa-file',
-            'label_color' => 'success',
-        ],
-        [
-            'text' => 'About Us',
-            'url' => 'admin/about-us',
-            'icon' => 'far fa-fw fa-file',
-            'label_color' => 'success',
-        ],
-        [
-    'text' => 'Career Page',
-    'url'  => 'admin/career',
-    'icon' => 'fas fa-briefcase',
-],
-
-[
-    'text' => 'Customer Care Page',
-    'url'  => 'admin/customer-care',
-    'icon' => 'fas fa-headset',
-],
-
-[
-    'text' => 'Collections',
-    'url'  => 'admin/collections',
-    'icon' => 'fas fa-layer-group',
-],
-[
-    'text' => 'Categories',
-    'url'  => 'admin/categories',
-    'icon' => 'fas fa-list-alt',
-],
-
+'menu' => [
+    // Navbar items:
+    [
+        'type' => 'navbar-search',
+        'text' => 'search',
+        'topnav_right' => true,
     ],
+    [
+        'type' => 'fullscreen-widget',
+        'topnav_right' => true,
+    ],
+
+    // Sidebar items:
+    [
+        'type' => 'sidebar-menu-search',
+        'text' => 'search',
+    ],
+
+    [
+        'text' => 'Homepage',
+        'url' => 'admin/homepage',
+        'icon' => 'fas fa-home', // changed to appropriate home icon
+        'label_color' => 'success',
+    ],
+
+    [
+        'text' => 'Catalogue',
+        'url' => 'admin/catalogue',
+        'icon' => 'fas fa-book-open', // changed to a book-like icon
+        'label_color' => 'success',
+    ],
+
+    [
+        'text' => 'About Us',
+        'url' => 'admin/about-us',
+        'icon' => 'fas fa-info-circle', // changed to info icon
+        'label_color' => 'success',
+    ],
+
+    [
+        'text' => 'Career Page',
+        'url'  => 'admin/career',
+        'icon' => 'fas fa-briefcase', // correct icon
+    ],
+
+    [
+        'text' => 'Customer Care Page',
+        'url'  => 'admin/customer-care',
+        'icon' => 'fas fa-headset', // correct icon
+    ],
+
+    [
+        'text' => 'Collections',
+        'url'  => 'admin/collections',
+        'icon' => 'fas fa-layer-group', // correct icon
+    ],
+
+    [
+        'text' => 'Categories',
+        'url'  => 'admin/categories',
+        'icon' => 'fas fa-th-list', // changed to better match category list
+    ],
+],
+    
 
     /*
     |--------------------------------------------------------------------------

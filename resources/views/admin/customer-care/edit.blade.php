@@ -73,8 +73,8 @@
                 <label class="form-label">Toll-Free Number <span class="text-danger">*</span></label>
                 <input type="text" name="tollfree_number" class="form-control mb-3" value="{{ old('tollfree_number', $care->tollfree_number) }}">
 
-                <label class="form-label">WhatsApp Chat Link <span class="text-danger">*</span></label>
-                <input type="url" name="whatsapp_chat" class="form-control" value="{{ old('whatsapp_chat', $care->whatsapp_chat) }}">
+                <label class="form-label">WhatsApp Chat Number <span class="text-danger">*</span></label>
+                <input type="text" name="whatsapp_chat" class="form-control" value="{{ old('whatsapp_chat', $care->whatsapp_chat) }}">
             </div>
         </div>
 

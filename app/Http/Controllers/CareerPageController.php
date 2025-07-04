@@ -52,8 +52,8 @@ class CareerPageController extends Controller
         'data' => [
             'banner_image' => asset('storage/' . $career->banner_image),
             'banner_description' => $career->banner_description,
-            'below_description' => $career->below_description,
-            'below_image' => asset('storage/' . $career->below_image),
+            'below_description' => $career->below_banner_description,
+            'below_image' => asset('storage/' . $career->below_description_image),
             'apply_link' => $career->apply_link
         ]
     ]);
