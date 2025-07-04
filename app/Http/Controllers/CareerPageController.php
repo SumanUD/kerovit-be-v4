@@ -44,19 +44,19 @@ class CareerPageController extends Controller
     }
 
     public function getCareerData()
-{
-    $career = CareerPage::first();
+    {
+        $career = CareerPage::first();
 
-    return response()->json([
-        'success' => true,
-        'data' => [
-            'banner_image' => asset('storage/' . $career->banner_image),
-            'banner_description' => $career->banner_description,
-            'below_description' => $career->below_banner_description,
-            'below_image' => asset('storage/' . $career->below_description_image),
-            'apply_link' => $career->apply_link
-        ]
-    ]);
-}
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'banner_image' => asset('storage/' . $career->banner_image),
+                'banner_description' => $career->banner_description,
+                'below_description' => $career->below_banner_description,
+                'below_image' => asset('storage/' . $career->below_description_image),
+                'apply_link' => $career->apply_link
+            ]
+        ]);
+    }
 
 }

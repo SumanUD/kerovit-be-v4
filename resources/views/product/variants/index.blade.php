@@ -16,6 +16,11 @@
     + Add New Variant
 </a>
 
+<a href="{{ route('ranges.products.index', $product->range_id) }}" class="btn btn-secondary mb-3">
+    ← Back to Products
+</a>
+
+
 <div class="card">
     <div class="card-body">
         <div class="table-responsive">

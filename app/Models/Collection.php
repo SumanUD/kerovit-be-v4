@@ -12,4 +12,10 @@ class Collection extends Model
         'description',
         'thumbnail_image',
     ];
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
+
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Range extends Model
 {
     protected $fillable = [
-        'name', 'slug', 'description', 'order', 'collection_id', 'category_id'
+        'name', 'slug', 'thumnbnail_image','description', 'order', 'collection_id', 'category_id'
     ];
 
     public function collection() {

@@ -125,4 +125,56 @@ class ProductController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+
+
+    public function getProductsByRange(Range $range)
+    {
+        $products = $range->products()
+            ->with(['variants:id,product_id,product_title,product_code,product_color_code,shape'])
+            ->orderBy('order')
+            ->get([
+                'id',
+                'product_title',
+                'product_code',
+                'product_picture',
+                'shape',
+                'series',
+                'range_id'
+            ]);
+
+        $formatted = $products->map(function ($product) {
+            $product->product_picture = $product->product_picture
+                ? asset('storage/' . $product->product_picture)
+                : null;
+
+            return [
+                'id' => $product->id,
+                'product_title' => $product->product_title,
+                'product_code' => $product->product_code,
+                'product_picture' => $product->product_picture,
+                'shape' => $product->shape,
+                'series' => $product->series,
+                'variants' => $product->variants->map(function ($variant) {
+                    return [
+                        'id' => $variant->id,
+                        'product_title' => $variant->product_title,
+                        'product_code' => $variant->product_code,
+                        'product_color_code' => $variant->product_color_code,
+                        'shape' => $variant->shape,
+                    ];
+                })
+            ];
+        });
+
+        return response()->json([
+            'status' => true,
+            'range' => [
+                'id' => $range->id,
+                'name' => $range->name,
+                'description' => $range->description,
+                'products' => $formatted
+            ]
+        ]);
+    }
 }

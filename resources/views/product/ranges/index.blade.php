@@ -24,6 +24,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th style="width: 40px;"></th>
+                        <th>Thumbnail</th>
                         <th>Name</th>
                         <th>Description</th>
                         <th style="width: 130px;">Actions</th>
@@ -33,6 +34,13 @@
                     @foreach($ranges as $range)
                         <tr data-id="{{ $range->id }}" class="sortable-row">
                             <td class="text-center handle"><i class="fas fa-bars text-muted"></i></td>
+                            <td>
+                                @if($range->thumnbnail_image)
+                                    <img src="{{ asset('storage/' . $range->thumnbnail_image) }}" alt="Thumbnail" width="60" height="60" class="rounded">
+                                @else
+                                    <span class="text-muted">N/A</span>
+                                @endif
+                            </td>
                             <td>{{ $range->name }}</td>
                             <td>{{ $range->description }}</td>
                             <td>

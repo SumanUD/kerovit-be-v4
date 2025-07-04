@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('slug')->unique();
+            $table->string('thumnbnail_image')->nullable();
             $table->text('description')->nullable();
             $table->integer('order')->default(0);
             $table->timestamps();

@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <form action="{{ route('categories.ranges.update', [$category->id, $range->id]) }}" method="POST">
+    <form action="{{ route('categories.ranges.update', [$category->id, $range->id]) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -32,6 +32,18 @@
             <input type="hidden" name="category_id" value="{{ $category->id }}">
             <input type="text" class="form-control" value="{{ $category->name }}" disabled>
         </div>
+
+        <div class="mb-3">
+            <label>Thumbnail Image</label>
+            @if($range->thumnbnail_image)
+                <div class="mb-2">
+                    <img src="{{ asset('storage/' . $range->thumnbnail_image) }}" width="100" height="100" class="rounded border">
+                </div>
+            @endif
+            <input type="file" name="thumnbnail_image" class="form-control @error('thumnbnail_image') is-invalid @enderror">
+            @error('thumnbnail_image') <div class="invalid-feedback">{{ $message }}</div> @enderror
+        </div>
+
 
         <div class="mb-3">
             <label>Name <span class="text-danger">*</span></label>

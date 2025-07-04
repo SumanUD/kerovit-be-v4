@@ -16,7 +16,6 @@ class CategoryRangeController extends Controller
         $ranges = $category->ranges()->orderBy('order')->get();
         return view('product.ranges.index', compact('category', 'ranges'));
     }
-
     public function reorder(Request $request, Category $category)
     {
         $order = $request->input('order');
@@ -34,15 +33,19 @@ class CategoryRangeController extends Controller
         return view('product.ranges.create', compact('category', 'collection'));
     }
 
-
     public function store(Request $request, Category $category)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'nullable|string|unique:ranges,slug',
+            'thumnbnail_image' => 'required|image',
             'description' => 'nullable|string',
             'collection_id' => 'required|exists:collections,id'
         ]);
+
+        if ($request->hasFile('thumnbnail_image')) {
+            $validated['thumnbnail_image'] = $request->file('thumnbnail_image')->store('thumnbnail_images', 'public');
+        }
 
         $validated['slug'] = $validated['slug'] ?? Str::slug($validated['name']);
         $validated['category_id'] = $category->id;
@@ -64,26 +67,85 @@ class CategoryRangeController extends Controller
         return view('product.ranges.edit', compact('category', 'range', 'collections'));
     }
 
-public function update(Request $request, Category $category, Range $range)
-{
-    if ($range->category_id !== $category->id) {
-        abort(404);
+    public function update(Request $request, Category $category, Range $range)
+    {
+        if ($range->category_id !== $category->id) {
+            abort(404);
+        }
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'nullable|string|unique:ranges,slug,' . $range->id,
+            'thumnbnail_image' => 'required|image',
+            'description' => 'nullable|string',
+            'collection_id' => 'required|exists:collections,id'
+        ]);
+
+        if ($request->hasFile('thumnbnail_image')) {
+            $validated['thumnbnail_image'] = $request->file('thumnbnail_image')->store('thumnbnail_images', 'public');
+        }
+
+        $validated['slug'] = $validated['slug'] ?? Str::slug($validated['name']);
+
+        $range->update($validated);
+
+        return redirect()->route('categories.ranges.index', $category->id)->with('success', 'Range updated successfully.');
     }
 
-    $validated = $request->validate([
-        'name' => 'required|string|max:255',
-        'slug' => 'nullable|string|unique:ranges,slug,' . $range->id,
-        'description' => 'nullable|string',
-        'collection_id' => 'required|exists:collections,id'
-    ]);
+    public function getRanges()
+    {
+        $collections = Collection::with([
+            'categories.ranges' => function ($query) {
+                $query->orderBy('order');
+            },
+            'categories.ranges.products' => function ($query) {
+                $query->orderBy('order');
+            },
+            'categories.ranges.products.variants'
+        ])->get();
 
-    $validated['slug'] = $validated['slug'] ?? Str::slug($validated['name']);
-
-    $range->update($validated);
-
-    return redirect()->route('categories.ranges.index', $category->id)->with('success', 'Range updated successfully.');
-}
-
-
+        return response()->json([
+            'status' => true,
+            'data' => $collections->map(function ($collection) {
+                return [
+                    'id' => $collection->id,
+                    'name' => $collection->name,
+                    'categories' => $collection->categories->map(function ($category) {
+                        return [
+                            'id' => $category->id,
+                            'name' => $category->name,
+                            'ranges' => $category->ranges->map(function ($range) {
+                                return [
+                                    'id' => $range->id,
+                                    'name' => $range->name,
+                                    'description' => $range->description,
+                                    'thumbnail' => $range->thumnbnail_image ? asset('storage/' . $range->thumnbnail_image) : null,
+                                    'products' => $range->products->map(function ($product) {
+                                        return [
+                                            'id' => $product->id,
+                                            'product_title' => $product->product_title,
+                                            'product_code' => $product->product_code,
+                                            'product_picture' => $product->product_picture ? asset('storage/' . $product->product_picture) : null,
+                                            'shape' => $product->shape,
+                                            'series' => $product->series,
+                                            'variants' => $product->variants->map(function ($variant) {
+                                                return [
+                                                    'id' => $variant->id,
+                                                    'product_title' => $variant->product_title,
+                                                    'product_code' => $variant->product_code,
+                                                    'product_color_code' => $variant->product_color_code,
+                                                    'shape' => $variant->shape,
+                                                ];
+                                            })
+                                        ];
+                                    })
+                                ];
+                            })
+                        ];
+                    })
+                ];
+            })
+        ]);
+    }
 
 }

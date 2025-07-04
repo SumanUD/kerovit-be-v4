@@ -49,13 +49,13 @@
         {{-- SECTION 1: Banner Videos --}}
         <div class="card card-outline card-primary mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <strong>1. Banner Section (Multiple Videos)</strong>
+                <strong>1. Banner Section</strong>
                 <button type="button" id="addBannerVideo" class="btn btn-sm btn-success">
-                    ➕ Add Video
+                    ➕ Add Video/Image
                 </button>
             </div>
             <div class="card-body">
-                <label class="form-label">Banner Videos <span class="text-danger">*</span></label>
+                <label class="form-label">Banner Videos/Image <span class="text-danger">*</span></label>
 
                 <div id="bannerVideoInputs">
                     <div class="input-group mb-3">
@@ -136,14 +136,14 @@
 
         {{-- SECTION 4: Locate Our Store --}}
         <div class="card card-outline card-info mb-4">
-            <div class="card-header"><strong>4. Locate Our Store Section</strong></div>
+            <div class="card-header"><strong>4. World of Kerovit</strong></div>
             <div class="card-body">
                 <label>Banner Image <span class="text-danger">*</span></label>
                 <input type="file" name="store_banner_image" class="form-control mb-2">
                 @if($section->store_banner_image)
                     <img src="{{ asset('storage/' . $section->store_banner_image) }}" class="img-thumbnail mb-3" height="80">
                 @endif
-
+                <br/>
                 <label>Header <span class="text-danger">*</span></label>
                 <input type="text" name="store_header" class="form-control mb-2" value="{{ old('store_header', $section->store_header) }}">
 
@@ -163,7 +163,7 @@
                         <source src="{{ asset('storage/' . $section->about_banner_video) }}" type="video/mp4">
                     </video>
                 @endif
-
+            <br/>
                 <label>Description <span class="text-danger">*</span></label>
                 <textarea name="about_description" class="form-control">{{ old('about_description', $section->about_description) }}</textarea>
             </div>
