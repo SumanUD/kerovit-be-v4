@@ -128,53 +128,62 @@ class ProductController extends Controller
 
 
 
-    public function getProductsByRange(Range $range)
-    {
-        $products = $range->products()
-            ->with(['variants:id,product_id,product_title,product_code,product_color_code,shape'])
-            ->orderBy('order')
-            ->get([
-                'id',
-                'product_title',
-                'product_code',
-                'product_picture',
-                'shape',
-                'series',
-                'range_id'
-            ]);
+public function getProductsByRange(Range $range)
+{
+    $products = $range->products()
+        ->with(['variants'])
+        ->orderBy('order')
+        ->get();
 
-        $formatted = $products->map(function ($product) {
-            $product->product_picture = $product->product_picture
-                ? asset('storage/' . $product->product_picture)
-                : null;
+    $formatted = $products->map(function ($product) {
+        return [
+            'id' => $product->id,
+            'collection_id' => $product->collection_id,
+            'category_id' => $product->category_id,
+            'range_id' => $product->range_id,
+            'order' => $product->order,
+            'product_code' => $product->product_code,
+            'product_picture' => $product->product_picture ? asset('storage/' . $product->product_picture) : null,
+            'product_title' => $product->product_title,
+            'series' => $product->series,
+            'shape' => $product->shape,
+            'spray' => $product->spray,
+            'product_description' => $product->product_description,
+            'product_color_code' => $product->product_color_code,
+            'product_feature' => $product->product_feature,
+            'product_installation_service_parts' => $product->product_installation_service_parts,
+            'design_files' => $product->design_files ? asset('storage/' . $product->design_files) : null,
+            'additional_information' => $product->additional_information,
+            'variants' => $product->variants->map(function ($variant) {
+                return [
+                    'id' => $variant->id,
+                    'product_id' => $variant->product_id,
+                    'product_code' => $variant->product_code,
+                    'product_picture' => $variant->product_picture ? asset('storage/' . $variant->product_picture) : null,
+                    'product_title' => $variant->product_title,
+                    'series' => $variant->series,
+                    'shape' => $variant->shape,
+                    'spray' => $variant->spray,
+                    'product_description' => $variant->product_description,
+                    'product_color_code' => $variant->product_color_code,
+                    'product_feature' => $variant->product_feature,
+                    'product_installation_service_parts' => $variant->product_installation_service_parts,
+                    'design_files' => $variant->design_files ? asset('storage/' . $variant->design_files) : null,
+                    'additional_information' => $variant->additional_information,
+                ];
+            })
+        ];
+    });
 
-            return [
-                'id' => $product->id,
-                'product_title' => $product->product_title,
-                'product_code' => $product->product_code,
-                'product_picture' => $product->product_picture,
-                'shape' => $product->shape,
-                'series' => $product->series,
-                'variants' => $product->variants->map(function ($variant) {
-                    return [
-                        'id' => $variant->id,
-                        'product_title' => $variant->product_title,
-                        'product_code' => $variant->product_code,
-                        'product_color_code' => $variant->product_color_code,
-                        'shape' => $variant->shape,
-                    ];
-                })
-            ];
-        });
+    return response()->json([
+        'status' => true,
+        'range' => [
+            'id' => $range->id,
+            'name' => $range->name,
+            'description' => $range->description,
+            'products' => $formatted
+        ]
+    ]);
+}
 
-        return response()->json([
-            'status' => true,
-            'range' => [
-                'id' => $range->id,
-                'name' => $range->name,
-                'description' => $range->description,
-                'products' => $formatted
-            ]
-        ]);
-    }
 }
