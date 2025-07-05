@@ -11,6 +11,7 @@ use App\Http\Controllers\CareerPageController;
 use App\Http\Controllers\CustomerCarePageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\VariantController;
+use App\Http\Controllers\BlogController;
 
 // Dashboard (only accessible to logged-in users)
 Route::get('/', function () {
@@ -50,6 +51,14 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     Route::get('customer-care', [CustomerCarePageController::class, 'edit'])->name('customer-care.edit');
     Route::post('customer-care', [CustomerCarePageController::class, 'update'])->name('customer-care.update');
+
+    Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
+    Route::get('/blogs/create', [BlogController::class, 'manage'])->name('blogs.create');
+    Route::post('/blogs', [BlogController::class, 'storeOrUpdate'])->name('blogs.store');
+    Route::get('/blogs/{blog}/edit', [BlogController::class, 'manage'])->name('blogs.edit');
+    Route::put('/blogs/{blog}', [BlogController::class, 'storeOrUpdate'])->name('blogs.update');
+    Route::delete('/blogs/{blog}', [BlogController::class, 'destroy'])->name('blogs.destroy');
+
 
     // All Products Start
 

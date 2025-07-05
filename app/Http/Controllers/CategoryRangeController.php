@@ -120,25 +120,6 @@ class CategoryRangeController extends Controller
                                     'name' => $range->name,
                                     'description' => $range->description,
                                     'thumbnail' => $range->thumnbnail_image ? asset('storage/' . $range->thumnbnail_image) : null,
-                                    'products' => $range->products->map(function ($product) {
-                                        return [
-                                            'id' => $product->id,
-                                            'product_title' => $product->product_title,
-                                            'product_code' => $product->product_code,
-                                            'product_picture' => $product->product_picture ? asset('storage/' . $product->product_picture) : null,
-                                            'shape' => $product->shape,
-                                            'series' => $product->series,
-                                            'variants' => $product->variants->map(function ($variant) {
-                                                return [
-                                                    'id' => $variant->id,
-                                                    'product_title' => $variant->product_title,
-                                                    'product_code' => $variant->product_code,
-                                                    'product_color_code' => $variant->product_color_code,
-                                                    'shape' => $variant->shape,
-                                                ];
-                                            })
-                                        ];
-                                    })
                                 ];
                             })
                         ];
