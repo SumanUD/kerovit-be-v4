@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\JsonResponse;
+
 
 class BlogController extends Controller
 {
@@ -58,4 +60,26 @@ class BlogController extends Controller
         $blog->delete();
         return redirect()->route('blogs.index')->with('success', 'Blog deleted successfully.');
     }
+
+    public function apiIndex(): JsonResponse
+    {
+        $blogs = Blog::latest()->get()->map(function ($blog) {
+            return [
+                'id' => $blog->id,
+                'title' => $blog->title,
+                'banner_image' => $blog->banner_image ? asset('storage/' . $blog->banner_image) : null,
+                'published_date' => $blog->published_date->format('Y-m-d'),
+                'is_popular' => (bool) $blog->is_popular,
+                'description' => $blog->description,
+                'meta_title' => $blog->meta_title,
+                'meta_description' => $blog->meta_description,
+            ];
+        });
+
+        return response()->json([
+            'status' => true,
+            'data' => $blogs
+        ]);
+    }
+
 }
