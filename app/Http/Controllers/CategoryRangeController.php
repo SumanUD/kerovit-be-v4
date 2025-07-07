@@ -44,7 +44,7 @@ class CategoryRangeController extends Controller
         ]);
 
         if ($request->hasFile('thumnbnail_image')) {
-            $validated['thumnbnail_image'] = $request->file('thumnbnail_image')->store('thumnbnail_images', 'public');
+            $validated['thumnbnail_image'] = $request->file('thumnbnail_image')->store('range', 'public');
         }
 
         $validated['slug'] = $validated['slug'] ?? Str::slug($validated['name']);
@@ -82,7 +82,7 @@ class CategoryRangeController extends Controller
         ]);
 
         if ($request->hasFile('thumnbnail_image')) {
-            $validated['thumnbnail_image'] = $request->file('thumnbnail_image')->store('thumnbnail_images', 'public');
+            $validated['thumnbnail_image'] = $request->file('thumnbnail_image')->store('range', 'public');
         }
 
         $validated['slug'] = $validated['slug'] ?? Str::slug($validated['name']);

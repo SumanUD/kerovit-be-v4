@@ -39,11 +39,11 @@ class VariantController extends Controller
         ]);
 
         if ($request->hasFile('product_picture')) {
-            $validated['product_picture'] = $request->file('product_picture')->store('products', 'public');
+            $validated['product_picture'] = $request->file('product_picture')->store('product_pictures', 'public');
         }
 
         if ($request->hasFile('design_files')) {
-            $validated['design_files'] = $request->file('design_files')->store('designs', 'public');
+            $validated['design_files'] = $request->file('design_files')->store('design_files', 'public');
         }
 
         $validated['product_id'] = $product->id;
@@ -85,12 +85,12 @@ class VariantController extends Controller
 
         if ($request->hasFile('product_picture')) {
             Storage::disk('public')->delete($variant->product_picture);
-            $validated['product_picture'] = $request->file('product_picture')->store('products', 'public');
+            $validated['product_picture'] = $request->file('product_picture')->store('product_pictures', 'public');
         }
 
         if ($request->hasFile('design_files')) {
             Storage::disk('public')->delete($variant->design_files);
-            $validated['design_files'] = $request->file('design_files')->store('designs', 'public');
+            $validated['design_files'] = $request->file('design_files')->store('design_files', 'public');
         }
 
         $variant->update($validated);

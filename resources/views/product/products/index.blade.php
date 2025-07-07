@@ -47,16 +47,17 @@
                     <div class="row mb-3">
                         <div class="col-md-3 text-center">
                             @if($product->product_picture)
-                                <img src="{{ asset('storage/' . $product->product_picture) }}" alt="Image"
+                                <img src="{{ asset('storage/products/' . $product->product_picture) }}" alt="Image"
                                      class="img-fluid rounded shadow-sm border" style="max-height: 180px;">
                             @else
                                 <span class="text-muted">No Image</span>
                             @endif
                         </div>
                         <div class="col-md-9">
-                            <p><strong>Series:</strong> {{ $product->series }}</p>
-                            <p><strong>Shape:</strong> {{ $product->shape }}</p>
-                            <p><strong>Color Code:</strong> {{ $product->product_color_code }}</p>
+                            <p><strong>Product code:</strong> {{ $product->product_code }}</p>
+                            
+                           <p>Color:  <div style="width: 20px; height: 20px; border: 1px solid #ccc; border-radius: 4px; background-color: {{ $product->product_color_code }};">
+                            </div></p>
                             <p><strong>Description:</strong> {{ $product->product_description }}</p>
                         </div>
                     </div>
@@ -70,7 +71,7 @@
                                     <th>Code</th>
                                     <th>Title</th>
                                     <th>Color</th>
-                                    <th>Shape</th>
+                                    <th>Image</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -79,8 +80,20 @@
                                     <tr>
                                         <td>{{ $variant->product_code }}</td>
                                         <td>{{ $variant->product_title }}</td>
-                                        <td>{{ $variant->product_color_code }}</td>
-                                        <td>{{ $variant->shape }}</td>
+                                        <td>
+                                            <div style="width: 20px; height: 20px; border: 1px solid #ccc; border-radius: 4px; background-color: {{ $variant->product_color_code }};">
+                                            </div>
+                                        </td>
+                                        <td>
+
+                                       
+                                         @if($variant->product_picture)
+                                            <img src="{{ asset('storage/products/' . $variant->product_picture) }}" alt="Image"
+                                                class="img-fluid rounded shadow-sm border" style="max-height: 60px;">
+                                        @else
+                                            <span class="text-muted">No Image</span>
+                                        @endif
+                                         </td>
                                         <td>
                                             <a href="{{ route('products.variants.edit', [$product->id, $variant->id]) }}"
                                                class="btn btn-sm btn-warning">Edit</a>

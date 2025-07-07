@@ -23,6 +23,7 @@
                         <th>Slug</th>
                         <th>Thumbnail</th>
                         <th>Actions</th>
+                        <th>Ranges</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,14 +42,13 @@
                             <td>
                                 <a href="{{ route('categories.edit', $category) }}" class="btn btn-sm btn-warning">Edit</a>
                                 <form action="{{ route('categories.destroy', $category) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this category?')">
-                                    @csrf @method('DELETE')
+                                    @csrf
+                                    @method('DELETE')
                                     <button class="btn btn-sm btn-danger">Delete</button>
                                 </form>
                             </td>
                             <td>
-                                <a href="{{ route('categories.ranges.index', $category->id) }}" class="btn btn-info btn-sm">
-                                    View Ranges
-                                </a>
+                                <a href="{{ route('categories.ranges.index', $category->id) }}" class="btn btn-info btn-sm">View Ranges</a>
                             </td>
                         </tr>
                     @endforeach
@@ -58,10 +58,26 @@
     </div>
 @stop
 
-@section('js')
+{{-- Include CSS --}}
+@push('css')
+    {{-- DataTables --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+@endpush
+
+{{-- Include JS --}}
+@push('js')
+    {{-- jQuery (only if not already included in AdminLTE) --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    {{-- DataTables --}}
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
     <script>
-        $(function () {
-            $('#category-table').DataTable();
+        $(document).ready(function () {
+            $('#category-table').DataTable({
+                responsive: true,
+                autoWidth: false
+            });
         });
     </script>
-@stop
+@endpush
