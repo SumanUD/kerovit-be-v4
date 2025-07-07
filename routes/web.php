@@ -12,6 +12,7 @@ use App\Http\Controllers\CustomerCarePageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\VariantController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\DealerController;
 
 // Dashboard (only accessible to logged-in users)
 Route::get('/', function () {
@@ -58,6 +59,9 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/blogs/{blog}/edit', [BlogController::class, 'manage'])->name('blogs.edit');
     Route::put('/blogs/{blog}', [BlogController::class, 'storeOrUpdate'])->name('blogs.update');
     Route::delete('/blogs/{blog}', [BlogController::class, 'destroy'])->name('blogs.destroy');
+
+    // Dealers
+    Route::resource('dealers', DealerController::class);
 
 
     // All Products Start

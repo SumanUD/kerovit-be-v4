@@ -19,7 +19,7 @@ class AboutUsPageController extends Controller
 public function update(Request $request)
 {
     $request->validate([
-        'banner_video' => 'nullable|file|mimes:mp4,webm|max:50480',
+        'banner_video' => 'nullable|file|mimes:mp4,webm|max:70480',
         'below_banner_description' => 'required|string',
         'director_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10000',
         'director_description' => 'required|string',

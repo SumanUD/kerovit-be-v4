@@ -47,7 +47,7 @@
                     <div class="row mb-3">
                         <div class="col-md-3 text-center">
                             @if($product->product_picture)
-                                <img src="{{ asset('storage/products/' . $product->product_picture) }}" alt="Image"
+                                <img src="{{ asset('storage/' . $product->product_picture) }}" alt="Image"
                                      class="img-fluid rounded shadow-sm border" style="max-height: 180px;">
                             @else
                                 <span class="text-muted">No Image</span>
@@ -88,7 +88,7 @@
 
                                        
                                          @if($variant->product_picture)
-                                            <img src="{{ asset('storage/products/' . $variant->product_picture) }}" alt="Image"
+                                            <img src="{{ asset('storage/' . $variant->product_picture) }}" alt="Image"
                                                 class="img-fluid rounded shadow-sm border" style="max-height: 60px;">
                                         @else
                                             <span class="text-muted">No Image</span>

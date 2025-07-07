@@ -360,6 +360,12 @@ return [
         'url'  => 'admin/categories',
         'icon' => 'fas fa-th-list', // changed to better match category list
     ],
+
+        [
+        'text' => 'Blogs',
+        'url'  => 'admin/blogs',
+        'icon' => 'fas fa-book', // changed to better match category list
+    ],
 ],
     
 
