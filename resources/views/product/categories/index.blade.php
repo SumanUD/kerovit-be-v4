@@ -21,7 +21,7 @@
                         <th>Name</th>
                         <th>Collection</th>
                         <th>Slug</th>
-                        <th>Thumbnail</th>
+                        <!--<th>Thumbnail</th>-->
                         <th>Actions</th>
                         <th>Ranges</th>
                     </tr>
@@ -32,13 +32,13 @@
                             <td>{{ $category->name }}</td>
                             <td>{{ $category->collection->name ?? '-' }}</td>
                             <td>{{ $category->slug }}</td>
-                            <td>
-                                @if($category->thumbnail_image)
-                                    <img src="{{ asset('storage/' . $category->thumbnail_image) }}" width="80">
-                                @else
-                                    <span class="text-muted">No Image</span>
-                                @endif
-                            </td>
+                            <!--<td>-->
+                            <!--    @if($category->thumbnail_image)-->
+                            <!--        <img src="{{ asset('storage/' . $category->thumbnail_image) }}" width="80">-->
+                            <!--    @else-->
+                            <!--        <span class="text-muted">No Image</span>-->
+                            <!--    @endif-->
+                            <!--</td>-->
                             <td>
                                 <a href="{{ route('categories.edit', $category) }}" class="btn btn-sm btn-warning">Edit</a>
                                 <form action="{{ route('categories.destroy', $category) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this category?')">

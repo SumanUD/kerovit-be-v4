@@ -24,6 +24,10 @@ Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('l
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
+// OTP routes
+Route::get('/verify-otp', [AuthenticatedSessionController::class, 'showOtpForm'])->name('otp.verify');
+Route::post('/verify-otp', [AuthenticatedSessionController::class, 'verifyOtp']);
+
 // Password reset
 Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
 Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
@@ -62,6 +66,8 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     // Dealers
     Route::resource('dealers', DealerController::class);
+    Route::get('dealers/data', [DealerController::class, 'index'])->name('dealers.data');
+
 
 
     // All Products Start
@@ -122,5 +128,5 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
 });
 
-
-
+// Delete single category
+Route::delete('/admin/catalogue/category/{id}', [CataloguePageController::class, 'destroyCategory'])->name('catalogue.category.destroy');

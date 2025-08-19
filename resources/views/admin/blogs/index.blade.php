@@ -15,7 +15,7 @@
 
     <div class="card">
         <div class="card-body table-responsive">
-            <table class="table table-bordered table-hover">
+            <table id="blogsTable" class="table table-bordered table-hover">
                 <thead class="thead-dark">
                     <tr>
                         <th>#</th>
@@ -54,10 +54,33 @@
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="5" class="text-center text-muted">No blogs found.</td></tr>
+                        <tr><td colspan="6" class="text-center text-muted">No blogs found.</td></tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
     </div>
+@stop
+
+@section('css')
+    {{-- DataTables CSS --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+@stop
+
+@section('js')
+    {{-- jQuery + DataTables --}}
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#blogsTable').DataTable({
+                responsive: true,
+                autoWidth: false,
+                pageLength: 10,
+                order: [[ 0, "asc" ]]
+            });
+        });
+    </script>
 @stop

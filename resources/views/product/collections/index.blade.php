@@ -24,7 +24,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Slug</th>
-                        <th>Thumbnail</th>
+                        <!-- <th>Thumbnail</th> -->
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -33,13 +33,13 @@
                         <tr>
                             <td>{{ $collection->name }}</td>
                             <td>{{ $collection->slug }}</td>
-                            <td>
+                            <!-- <td>
                                 @if($collection->thumbnail_image)
                                     <img src="{{ asset('storage/' . $collection->thumbnail_image) }}" width="80">
                                 @else
                                     <span class="text-muted">No Image</span>
                                 @endif
-                            </td>
+                            </td> -->
                             <td>
                                 <a href="{{ route('collections.edit', $collection) }}" class="btn btn-sm btn-warning">Edit</a>
                                 <form action="{{ url('admin/collections/' . $collection->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure?')">

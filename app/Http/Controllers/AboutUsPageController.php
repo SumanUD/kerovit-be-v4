@@ -42,14 +42,26 @@ public function update(Request $request)
         $about->director_image = $request->file('director_image')->store('about/director', 'public');
     }
 
-    // Handle multiple certification images
-    $certificationImages = [];
+    // ✅ Fixed multiple certification images
+    $existing = is_array($about->certification_images) ? $about->certification_images : [];
+
+    if ($request->has('remove_certificates')) {
+        foreach ($request->remove_certificates as $index => $flag) {
+            if ($flag == "1" && isset($existing[$index])) {
+                \Storage::disk('public')->delete($existing[$index]);
+                unset($existing[$index]);
+            }
+        }
+        $existing = array_values($existing);
+    }
+
     if ($request->hasFile('certification_images')) {
         foreach ($request->file('certification_images') as $file) {
-            $certificationImages[] = $file->store('about/certifications', 'public');
+            $existing[] = $file->store('about/certifications', 'public');
         }
-        $about->certification_images = $certificationImages;
     }
+
+    $about->certification_images = $existing;
 
     // Save other fields
     $about->below_banner_description = $request->below_banner_description;

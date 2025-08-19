@@ -63,8 +63,8 @@ return [
     |
     */
 
-    'logo' => '<b>Kerovit</b>',
-    'logo_img' => '/storage/logo/k_logo.png',
+    'logo' => '<b> Admin Panel</b>',
+    'logo_img' => '/storage/logo/logo_big.webp',
     'logo_img_class' => 'brand-image elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -257,7 +257,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -300,11 +300,7 @@ return [
 
 'menu' => [
     // Navbar items:
-    [
-        'type' => 'navbar-search',
-        'text' => 'search',
-        'topnav_right' => true,
-    ],
+
     [
         'type' => 'fullscreen-widget',
         'topnav_right' => true,
@@ -365,6 +361,12 @@ return [
         'text' => 'Blogs',
         'url'  => 'admin/blogs',
         'icon' => 'fas fa-book', // changed to better match category list
+    ],
+    
+            [
+        'text' => 'Dealers',
+        'url'  => 'admin/dealers',
+        'icon' => 'fas fa-user', // changed to better match category list
     ],
 ],
     

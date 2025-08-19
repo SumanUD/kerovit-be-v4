@@ -43,6 +43,32 @@
                 @endif
             </div>
         </div>
+                
+                        {{-- SECTION 1.2: Banner Videos --}}
+        <div class="card card-outline card-primary mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <strong>Meta Tags: </strong>
+          
+            </div>
+            <div class="card-body">
+                <label class="form-label">Meta title: <span class="text-danger">*</span></label>
+
+                <div id="">
+                    <div class="input-group mb-3">
+                        <input type="text" name="" class="form-control">
+                    </div>
+                </div>
+                
+                     <label class="form-label">Meta description: <span class="text-danger">*</span></label>
+
+                <div id="">
+                    <div class="input-group mb-3">
+                        <input type="text" name="" class="form-control">
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
         {{-- 2. Below Banner Description --}}
         <div class="card card-outline card-info mb-4">
@@ -106,27 +132,45 @@
             </div>
         </div>
 
-        {{-- 6. Certification Images --}}
-        <div class="card card-outline card-primary mb-4">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <strong>6. Certification Images <span class="text-danger">*</span></strong>
-                <button type="button" class="btn btn-sm btn-success" id="addCertImage">+ Add Image</button>
-            </div>
-            <div class="card-body" id="certImageWrapper">
-                <div class="cert-upload mb-3">
-                    <input type="file" name="certification_images[]" class="form-control">
-                </div>
-                @error('certification_images.*') <small class="text-danger">{{ $message }}</small> @enderror
-
-                @if(is_array($about->certification_images))
-                    <div class="d-flex flex-wrap gap-2 mt-3">
-                        @foreach($about->certification_images as $img)
-                            <img src="{{ asset('storage/' . $img) }}" height="80" class="border rounded">
-                        @endforeach
-                    </div>
-                @endif
-            </div>
+    {{-- 6. Certification Images --}}
+    <div class="card card-outline card-primary mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <strong>6. Certification Images <span class="text-danger">*</span></strong>
+            <button type="button" class="btn btn-sm btn-success" id="addCertImage">+ Add Image</button>
         </div>
+        <div class="card-body">
+
+            {{-- Upload new certificates --}}
+            <div id="certImageWrapper" class="mb-4">
+                {{-- JS will append new inputs here --}}
+            </div>
+
+            {{-- Show existing certificates --}}
+            @if(is_array($about->certification_images) && count($about->certification_images) > 0)
+                <div class="row g-3">
+                    @foreach($about->certification_images as $index => $img)
+                        <div class="col-md-3 text-center cert-block">
+                            <div class="border p-2 rounded position-relative">
+                                <img src="{{ asset('storage/' . $img) }}" class="img-fluid rounded mb-2" style="max-height:120px; object-fit:contain;">
+                                
+                                {{-- Delete toggle --}}
+                                <button type="button" class="btn btn-danger btn-sm removeCertBtn" data-index="{{ $index }}">
+                                    Remove
+                                </button>
+
+                                {{-- Hidden input to mark removal --}}
+                                <input type="hidden" name="remove_certificates[]" value="" id="remove-cert-{{ $index }}">
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+
+            @error('certification_images.*') 
+                <small class="text-danger">{{ $message }}</small> 
+            @enderror
+        </div>
+    </div>
 
         <div class="text-end">
             <button class="btn btn-primary" id="submitBtn">
@@ -139,7 +183,9 @@
 @endsection
 
 @push('js')
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 <script>
+    document.querySelectorAll('textarea').forEach(el => CKEDITOR.replace(el));
     let plantIndex = {{ $about->plants->count() }};
 
     document.getElementById('addPlant').addEventListener('click', function () {
@@ -170,17 +216,40 @@
         }
     });
 
+
+    // Add new certificate input
     document.getElementById('addCertImage').addEventListener('click', function () {
-        const container = document.createElement('div');
-        container.className = 'cert-upload mb-3';
+        const wrapper = document.getElementById('certImageWrapper');
 
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.name = 'certification_images[]';
-        input.className = 'form-control';
+        const div = document.createElement('div');
+        div.classList.add('cert-upload', 'mb-2');
 
-        container.appendChild(input);
-        document.getElementById('certImageWrapper').appendChild(container);
+        div.innerHTML = `
+            <div class="input-group">
+                <input type="file" name="certification_images[]" class="form-control">
+                <button type="button" class="btn btn-outline-danger removeNewCert">X</button>
+            </div>
+        `;
+
+        wrapper.appendChild(div);
+    });
+
+    // Remove dynamically added input
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('removeNewCert')) {
+            e.target.closest('.cert-upload').remove();
+        }
+    });
+
+    // Mark existing certificate for removal
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('removeCertBtn')) {
+            const index = e.target.dataset.index;
+            document.getElementById(`remove-cert-${index}`).value = "1"; // mark as removed
+            e.target.closest('.cert-block').style.opacity = "0.4";
+            e.target.textContent = "Will be removed";
+            e.target.disabled = true;
+        }
     });
 
     document.getElementById('aboutForm').addEventListener('submit', function () {

@@ -186,4 +186,34 @@ public function getProductsByRange(Range $range)
     ]);
 }
 
+ public function search(Request $request)
+    {
+        $keyword = $request->input('q');
+
+        if (!$keyword) {
+            return response()->json(['message' => 'Please provide a search keyword.'], 400);
+        }
+
+        $products = Product::with(['variants'])
+            ->where(function ($query) use ($keyword) {
+                $query->where('product_code', 'like', "%{$keyword}%")
+                    ->orWhere('product_title', 'like', "%{$keyword}%")
+                    ->orWhere('series', 'like', "%{$keyword}%")
+                    ->orWhere('shape', 'like', "%{$keyword}%")
+                    ->orWhere('spray', 'like', "%{$keyword}%")
+                    ->orWhere('product_description', 'like', "%{$keyword}%");
+            })
+            ->orWhereHas('variants', function ($query) use ($keyword) {
+                $query->where('product_code', 'like', "%{$keyword}%")
+                    ->orWhere('product_title', 'like', "%{$keyword}%")
+                    ->orWhere('series', 'like', "%{$keyword}%")
+                    ->orWhere('shape', 'like', "%{$keyword}%")
+                    ->orWhere('spray', 'like', "%{$keyword}%")
+                    ->orWhere('product_description', 'like', "%{$keyword}%");
+            })
+            ->get();
+
+        return response()->json(['products' => $products]);
+    }
+
 }

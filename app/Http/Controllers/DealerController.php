@@ -4,35 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Dealer;
 use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables;
+
 
 class DealerController extends Controller
 {
-    /**
-     * Display a listing of the dealers.
-     */
-// DealerController.php
 
-
-public function index(Request $request)
+public function index()
 {
-    if ($request->ajax()) {
-        $dealers = Dealer::select(['id', 'dealername', 'pincode', 'city', 'phone', 'contactperson']);
-
-        return DataTables::of($dealers)
-            ->addColumn('actions', function ($dealer) {
-                return '<a href="' . route('dealers.edit', $dealer->id) . '" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="' . route('dealers.destroy', $dealer->id) . '" method="POST" style="display:inline;">
-                            ' . csrf_field() . method_field('DELETE') . '
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure?\')">Delete</button>
-                        </form>';
-            })
-            ->rawColumns(['actions'])
-            ->make(true);
-    }
-
-    return view('admin.dealers.index');
+    $dealers = Dealer::select(['id','dealercode', 'dealername', 'pincode', 'city', 'phone', 'contactperson','contactnumber'])->get();
+    return view('admin.dealers.index', compact('dealers'));
 }
+
 
 
     /**

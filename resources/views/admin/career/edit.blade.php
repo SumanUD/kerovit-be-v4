@@ -41,6 +41,33 @@
                 <textarea name="banner_description" class="form-control" required>{{ old('banner_description', $career->banner_description) }}</textarea>
             </div>
         </div>
+        
+                
+                        {{-- SECTION 1.2: Banner Videos --}}
+        <div class="card card-outline card-primary mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <strong>Meta Tags: </strong>
+          
+            </div>
+            <div class="card-body">
+                <label class="form-label">Meta title: <span class="text-danger">*</span></label>
+
+                <div id="">
+                    <div class="input-group mb-3">
+                        <input type="text" name="" class="form-control">
+                    </div>
+                </div>
+                
+                     <label class="form-label">Meta description: <span class="text-danger">*</span></label>
+
+                <div id="">
+                    <div class="input-group mb-3">
+                        <input type="text" name="" class="form-control">
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
         {{-- 2. Below Banner Description --}}
         <div class="card card-outline card-info mb-4">
@@ -76,7 +103,9 @@
 @endsection
 
 @push('js')
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 <script>
+    document.querySelectorAll('textarea').forEach(el => CKEDITOR.replace(el));
     document.getElementById('careerForm').addEventListener('submit', function () {
         const btn = document.getElementById('submitBtn');
         btn.disabled = true;
