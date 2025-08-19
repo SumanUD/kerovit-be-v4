@@ -13,6 +13,9 @@
     .img-thumbnail {
         height: revert-layer !important;
     }
+        .main-sidebar{
+        position: fixed !important;
+    }
 </style>
 
 @section('content')

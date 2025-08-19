@@ -14,6 +14,10 @@ use App\Http\Controllers\VariantController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\DealerController;
 
+use App\Http\Controllers\ContactMessageController;
+
+
+
 // Dashboard (only accessible to logged-in users)
 Route::get('/', function () {
     return view('dashboard');
@@ -125,6 +129,9 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     // variant products
     Route::resource('products.variants', VariantController::class);
+
+    Route::resource('contact-messages', ContactMessageController::class)->only(['index', 'destroy']);
+
 
 });
 

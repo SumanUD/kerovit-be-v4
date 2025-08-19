@@ -25,8 +25,8 @@ class mailController extends Controller
 
         $contact = ContactMessage::create($validated);
 
-        Mail::to(config('mail.from.address'))->send(new ContactMessageNotification($contact));
-        Mail::to($contact->email)->send(new ContactMessageCopyToSender($contact));
+        // Mail::to(config('mail.from.address'))->send(new ContactMessageNotification($contact));
+        // Mail::to($contact->email)->send(new ContactMessageCopyToSender($contact));
 
         return response()->json(['success' => true, 'message' => 'Message sent successfully.']);
     }

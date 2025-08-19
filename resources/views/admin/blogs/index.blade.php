@@ -6,6 +6,16 @@
     <h1>All Blogs</h1>
 @stop
 
+
+<style>
+    .cke_notifications_area {
+        display: none;
+    }
+    .main-sidebar{
+        position: fixed !important;
+    }
+</style>
+
 @section('content')
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>

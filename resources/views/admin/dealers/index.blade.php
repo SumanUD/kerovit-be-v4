@@ -1,6 +1,16 @@
 @extends('adminlte::page')
 @section('title', 'Dealers')
 
+
+<style>
+    .cke_notifications_area {
+        display: none;
+    }
+    .main-sidebar{
+        position: fixed !important;
+    }
+</style>
+
 @section('content')
 
     <a href="{{ route('dealers.create') }}" class="btn btn-primary mb-3">Add Dealer</a>

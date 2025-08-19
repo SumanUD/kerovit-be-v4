@@ -363,10 +363,16 @@ return [
         'icon' => 'fas fa-book', // changed to better match category list
     ],
     
-            [
+        [
         'text' => 'Dealers',
         'url'  => 'admin/dealers',
         'icon' => 'fas fa-user', // changed to better match category list
+    ],
+
+    [
+        'text' => 'Contact Data',
+        'url'  => 'admin/contact-messages',
+        'icon' => 'fas fa-phone', // changed to better match category list
     ],
 ],
     

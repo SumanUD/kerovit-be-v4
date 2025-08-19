@@ -27,5 +27,4 @@ Route::middleware('api.key')->group(function () {
     Route::get('/customer-care', [CustomerCarePageController::class, 'getCustomerData']);
     Route::get('/get-ranges', [CategoryRangeController::class, 'getRanges']);
     Route::get('/ranges/{range}/products', [ProductController::class, 'getProductsByRange']);
-
-Route::get('/products/search', [ProductController::class, 'search']);
+    Route::get('/products/search', [ProductController::class, 'search']);

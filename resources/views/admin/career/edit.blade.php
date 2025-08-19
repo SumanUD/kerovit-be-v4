@@ -6,6 +6,14 @@
     <h1>Career Page CMS</h1>
 @stop
 
+<style>
+    .cke_notifications_area {
+        display: none;
+    }
+    .main-sidebar{
+        position: fixed !important;
+    }
+</style>
 @section('content')
 <div class="container">
     {{-- Success message --}}

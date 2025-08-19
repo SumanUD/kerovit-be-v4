@@ -36,6 +36,9 @@
             color: inherit;
             text-decoration: none;
         }
+        .cke_notifications_area{
+            display: none;
+        }
     </style>
 
     @php
